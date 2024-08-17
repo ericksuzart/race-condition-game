@@ -33,46 +33,31 @@ int mainFunction(JoyInterface & ji)
         return 1;
     }
 
-    Field field(FIELD_WIDTH, FIELD_HEIGHT);
+    Background background(SCREEN_WIDTH, SCREEN_HEIGHT);
+    Track track_0(SCREEN_WIDTH, SCREEN_HEIGHT / 4, 0, SCREEN_HEIGHT / 4);
+    Track track_1(SCREEN_WIDTH, SCREEN_HEIGHT / 4, 0, 2.5 * SCREEN_HEIGHT / 4);
 
-    SDL_Color red = {200, 0, 0, 255};
-    SDL_Color blue = {0, 0, 200, 255};
-    SDL_Color green = {0, 200, 0, 255};
+    // Robot car_0(BLUE, SIDE_MARGIN + TRACK_WIDTH / 2 - 100,
+    //              TRACK_HEIGHT / 2 + TOP_MARGIN, 0, 1, ji);
+    // Robot car_1(GREEN, SIDE_MARGIN + TRACK_WIDTH / 2 + 100,
+    //              TRACK_HEIGHT / 2 + TOP_MARGIN, M_2_PI + 2.5F, 2, ji);
 
-    Ball ball(SIDE_MARGIN + FIELD_WIDTH / 2, FIELD_HEIGHT / 2 + TOP_MARGIN, 10,
-              red);
-    Robot robot1(blue, SIDE_MARGIN + FIELD_WIDTH / 2 - 100,
-                 FIELD_HEIGHT / 2 + TOP_MARGIN, 0, 1, ji);
-    Robot robot2(green, SIDE_MARGIN + FIELD_WIDTH / 2 + 100,
-                 FIELD_HEIGHT / 2 + TOP_MARGIN, M_2_PI + 2.5F, 2, ji);
-
-    Colisions colisions(ball, {&robot1, &robot2});
-    Interactions Interactions(ball, {&robot1, &robot2});
-    Score Score(ball, {&robot1, &robot2});
-
-    ball.setSpeed(0, 0);
+    // Score Score(ball, {&car_0, &car_1});
 
     bool quit = false;
     SDL_Event e;
     while (!quit)
     {
-        Interactions.robotsThrowBall();
-
         // Desenha o campo
-        field.draw(renderer);
-        ball.draw(renderer);
-        robot1.draw(renderer);
-        robot2.draw(renderer);
-        Score.updateScore();
+        background.draw(renderer);
+        track_0.draw(renderer);
+        track_1.draw(renderer);
+        // car_0.draw(renderer);
+        // car_1.draw(renderer);
+        // Score.updateScore();
 
-        // Verifica colisões
-        // colisions.checkColisions();
-
-        ball.move();
-        robot1.move();
-        robot2.move();
-
-        Interactions.robotsCatchBall();
+        // car_0.move();
+        // car_1.move();
 
         // colisions.checkColisions();
 
@@ -90,8 +75,8 @@ int mainFunction(JoyInterface & ji)
         while (ji.hasKeyEvent())
         {
             proto::KeyEvent key_event = ji.getKeyEvent();
-            robot1.setMove(key_event);
-            robot2.setMove(key_event);
+            // car_0.setMove(key_event);
+            // car_1.setMove(key_event);
         }
     }
 

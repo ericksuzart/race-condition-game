@@ -54,9 +54,9 @@ void Robot::move()
     for (int i = 0; i < 4; i++)
     {
         if (body.points[i].x + x_v <= SIDE_MARGIN + 5) x_v = 0;
-        if (body.points[i].x + x_v >= SIDE_MARGIN + FIELD_WIDTH - 5) x_v = 0;
+        if (body.points[i].x + x_v >= SIDE_MARGIN + TRACK_WIDTH - 5) x_v = 0;
         if (body.points[i].y + y_v <= 55) y_v = 0;
-        if (body.points[i].y + y_v >= FIELD_HEIGHT + TOP_MARGIN - 5) y_v = 0;
+        if (body.points[i].y + y_v >= TRACK_HEIGHT + TOP_MARGIN - 5) y_v = 0;
     }
 
     x += x_v;
@@ -258,10 +258,10 @@ void Robot::rotate(double angle)
 
 void Robot::setBodyPosition(int x, int y)
 {
-    body.points[0] = {x - ROBOT_SIZE, y - ROBOT_SIZE};
-    body.points[1] = {x + ROBOT_SIZE, y - ROBOT_SIZE};
-    body.points[2] = {x + ROBOT_SIZE, y + ROBOT_SIZE};
-    body.points[3] = {x - ROBOT_SIZE, y + ROBOT_SIZE};
+    body.points[0] = {x - CAR_SIZE, y - CAR_SIZE};
+    body.points[1] = {x + CAR_SIZE, y - CAR_SIZE};
+    body.points[2] = {x + CAR_SIZE, y + CAR_SIZE};
+    body.points[3] = {x - CAR_SIZE, y + CAR_SIZE};
 }
 
 double Robot::getXThrowSpeed() { return xThrowSpeed; }

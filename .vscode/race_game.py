@@ -4,15 +4,16 @@ import time
 
 # Shared resource
 finish_line = 100
+WhoWon = ""
 player1_position = 0
 player2_position = 0
 
 def player_race(player_name, position):
-    global player1_position, player2_position
+    global player1_position, player2_position, WhoWon
 
     while True:
         # Simulate the player moving forward randomly
-        move = random.randint(1, 10)
+        move = 10
         if player_name == "Player 1":
             player1_position += move
             position = player1_position
@@ -24,22 +25,33 @@ def player_race(player_name, position):
 
         # Check if the player has crossed the finish line
         if position >= finish_line:
-            print(f"{player_name} wins!")
+            WhoWon = player_name
             break
 
         # Small delay to simulate race pace
-        time.sleep(random.uniform(0.1, 0.5))
+        time.sleep(0.5)
+
+def game():
+    global WhoWon
+    while True:
+        if WhoWon != "":
+            print(f"Winner is {WhoWon}")
+            break
+        time.sleep(1)
 
 # Create threads for both players
 player1_thread = threading.Thread(target=player_race, args=("Player 1", player1_position))
 player2_thread = threading.Thread(target=player_race, args=("Player 2", player2_position))
+game_thread = threading.Thread(target=game)
 
 # Start the race
 player1_thread.start()
 player2_thread.start()
+game_thread.start()
 
 # Wait for both players to finish
 player1_thread.join()
 player2_thread.join()
+game_thread.join()
 
 print("Race finished!")

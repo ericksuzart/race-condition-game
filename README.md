@@ -1,76 +1,90 @@
-# Desafio OxeBots, Equipe 1
+# Race Condition Game
 
-## Descrição do Projeto
+## Description
 
-O desafio consiste em desenvolver um simulador 2D na linguagem de programação C++, que deve incluir, no mínimo, um robô e uma bola, sendo essencial que o robô interaja com a bola.
+Race Condition Game is a multiplayer drag racing game developed for a programming class to demonstrate the race condition phenomenon in a fun and interactive way. The game simulates a race where up to 4 clients compete by moving their cars across the screen, and the server manages the game logic. This game illustrates the concept of race conditions by showing how simultaneous actions from multiple clients are handled by the server, showing the unpredictability and potential conflicts found in concurrent programming.
 
-Considerando que o simulador é primariamente uma ferramenta de validação, torna-se necessária a comunicação com um módulo externo, que enviará os comandos para o/os robôs, para isso, será necessário o uso do protocolo de comunicação protobuf.
+Each client controls a unique car, and the objective is to be the first to cross the finish line. The server ensures that all clients are synchronized, but the outcome of the race showcases how simultaneous input from multiple clients can lead to unpredictable results.
 
-## Dependências
+This game is designed for local area network (LAN) play, where one machine runs the server and others connect as clients to participate in the race.
 
-- SDL2
-- protobuf
-- make
+## Dependencies
 
-## Instalação
+This game requires the following libraries and tools to be installed on your Linux system:
 
-No Ubuntu, você pode instalar as dependências necessárias executando o comando abaixo:
+- **`SDL2`**: The Simple DirectMedia Layer library for graphics rendering and input handling.
+- **`g++`**: The GNU C++ compiler for building the project.
+- **`Make`**: For managing the build process.
 
-``` sh
-sudo apt-get install libsdl2-dev protobuf-compiler make libprotobuf-dev
+### Install SDL2 on Linux (Ubuntu/Debian)
+
+You can install the necessary dependencies via apt:
+
+``` bash
+Copy code
+sudo apt update
+sudo apt install libsdl2-dev build-essential
 ```
 
-## Como compilar
+## How to Run
 
-Para compilar o projeto, basta executar o comando `make` no terminal.
+### 1. Clone the repository
 
-## Como executar
+First, clone the repository containing the server and client code:
 
-Para executar o projeto, basta executar o comando `make run` no terminal.
+```bash
+git clone git@github.com:ericksuzart/race-condition-game.git
+cd race-condition-game
+```
 
-No VSCode, você pode executar o projeto através da extensão `ms-vscode.makefile-tools`.
+### 2. Build the Project
 
-> VS Marketplace Link: [https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools)
+The project is built using Make. Run the following command in the project directory to build both the server and client:
 
-## Processo de Desenvolvimento
+```bash
+cd race-condition-game
+make 
+```
 
-### Pesquisa
+This will generate two executables: server and client.
 
-Após compreender as exigências do projeto, conduzimos uma pesquisa sobre as tecnologias e ferramentas necessárias. Além disso, revisamos conceitos de classes em C++ e programação orientada a objetos.
+## 3. Running the Server
+****
+To start the server, run the following command in the terminal:
 
-Buscamos exemplos de simuladores 2D para utilizarmos como base, estudamos o funcionamento do SDL e procuramos por outros projetos que utilizassem essa biblioteca. Também revisamos os conceitos de programação necessários para a realização do desafio e investigamos maneiras de tornar o projeto compatível tanto com Windows quanto com Linux. Além disso, buscamos material para compreender o que é um protobuf e como ele funciona.
+```bash
+cd race-condition-game
+./server
+```
 
-### Material de Apoio:
+This starts the server and waits for up to 4 clients to connect. The server will handle the game logic and broadcast the status to the clients.
 
-- Exemplo de projeto: Bots2D: [Bots2D: Building a robot 2D simulator from scratch in C++](https://www.artfulbytes.com/bots2d-blogpost)
-- Tutorial de configuração do SDL: [https://youtu.be/H08t6gD1Y1E?si=qEVLzV1xthIzJLfd](https://youtu.be/H08t6gD1Y1E?si=qEVLzV1xthIzJLfd)
-- Wiki do SDL: https:[https://wiki.libsdl.org/SDL2/FrontPage](https://wiki.libsdl.org/SDL2/FrontPage)
-- Projetos com SDL: [C++/SDL2 RPG Physics Based 2D Platformer for Beginners Tutorial](https://www.youtube.com/watch?v=KsG6dJlLBDw&list=PL2RPjWnJduNmXHRYwdtublIPdlqocBoLS), [Making a Game With C++ and SDL2](https://www.youtube.com/watch?v=iEn0ozP-jxc)
-- Exemplo de projeto IEEE Very Small Size Soccer: [https://youtu.be/YU4e1UFWLeY?si=-I7xb6xXNY1ujLUS](https://youtu.be/YU4e1UFWLeY?si=-I7xb6xXNY1ujLUS)
-- Desenvolvimento de um robô: [https://periodicos.ufersa.edu.br/ecop/article/view/7890](https://periodicos.ufersa.edu.br/ecop/article/view/7890)
-- Material sobre a função inet_addr (winsock2.h)::[função inet_addr (winsock2.h)](https://learn.microsoft.com/pt-br/windows/win32/api/winsock2/nf-winsock2-inet_addr)
+### 4. Running the Client
 
-### Desenvolvimento
+To run a client, use the following command:
 
-- Arquitetura do projeto
-- Criar uma janela e um loop
-- Criação das classes Ball, Robot, Field, Interactions, Score
-- Implementação das mecânicas:
-- Robot:
-- - Movimento
-- - Colisão
-- - Controle
-- Ball:
-- - Movimento
-- - Colisão
-- Interactions:
-- - Robô pega a bola
-- - Robô lança a bola
-- Score:
-- - Marcar gol
-- - Atualizar placar
-- - Voltar às posições iniciais
-- Comunicação:
-- - Protocolo
-- - Envio de comandos
-- Segunda janela com representação gráfica dos controles dos robôs
+```bash
+cd race-condition-game
+./client
+```
+
+This connects the client to the server running at "127.0.0.1" on port 8081.
+
+Each client will see the game window and can participate in the race by pressing the right arrow key to move their car.
+
+### 5. Play the Game
+
+- Up to 4 clients can connect to the server.
+- Once all clients are connected, a countdown will start, and the race will begin.
+- The first client to reach the finish line wins the race. Other clients will see a losing screen.
+
+## Notes
+
+- Ensure that the server and client machines are on the same local network.
+- The server must be started before the clients attempt to connect.
+- Use the server's IP address (found using ifconfig or ip a) when running the client from other machines.
+
+## Troubleshooting
+
+- Firewall Issues: Ensure that the server's port is open on the firewall for both incoming and outgoing traffic.
+- Same Network: Both server and client must be on the same LAN or have proper routing if in different networks.

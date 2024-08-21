@@ -359,7 +359,6 @@ void Client::renderTrack(int x, int y)
 
 void Client::renderBackground()
 {
-    SDL_Color WHITE = {255, 255, 255, 255};
     SDL_Color DARK_GRAY = {64, 64, 64, 255};
     SDL_Color GRAY = {128, 128, 128, 255};
     SDL_Color BLUE = {0, 0, 255, 255};
@@ -369,11 +368,6 @@ void Client::renderBackground()
 
     int width = 800;
     int height = 600;
-
-    // Set the draw color to white and draw the background
-    // SDL_SetRenderDrawColor(renderer, WHITE.r, WHITE.g, WHITE.b, WHITE.a);
-    // SDL_Rect backgroundRect = {0, 0, width, height};
-    // SDL_RenderFillRect(renderer, &backgroundRect);
 
     // Define the number of grandstands
     int numGrandstands = 4;
